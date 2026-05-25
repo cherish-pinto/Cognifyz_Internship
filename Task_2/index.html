@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced CSS Design</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header Navigation */
+        header {
+            background: linear-gradient(135deg, #1e5a96 0%, #0d3b6b 100%);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #d4af37;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1e5a96 0%, #2e7ab8 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #d4af37;
+            color: #1e5a96;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid #d4af37;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: #d4af37;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e5a96;
+            margin-bottom: 3rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: #d4af37;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #d4af37;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 24px rgba(30, 90, 150, 0.2);
+            background: linear-gradient(135deg, #f0f7ff 0%, #fff9f0 100%);
+        }
+
+        .service-card h3 {
+            color: #1e5a96;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .features-text h2 {
+            color: #1e5a96;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: #555;
+            transition: transform 0.2s ease;
+        }
+
+        .feature-list li:hover {
+            transform: translateX(10px);
+        }
+
+        .feature-list li::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            color: #d4af37;
+            font-size: 1.2rem;
+        }
+
+        .features-image {
+            background: linear-gradient(135deg, #1e5a96 0%, #2e7ab8 100%);
+            padding: 3rem;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* About Section */
+        .about {
+            background: linear-gradient(135deg, #1e5a96 0%, #0d3b6b 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            line-height: 2;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            background: #0d3b6b;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            border-top: 4px solid #d4af37;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .service-card:nth-child(1) {
+            animation: slideInLeft 0.5s ease 0.1s backwards;
+        }
+
+        .service-card:nth-child(2) {
+            animation: slideInLeft 0.5s ease 0.2s backwards;
+        }
+
+        .service-card:nth-child(3) {
+            animation: slideInLeft 0.5s ease 0.3s backwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .features-container {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 3rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            nav a {
+                display: block;
+                padding: 0.5rem;
+            }
+
+            .services {
+                padding: 2rem 1rem;
+            }
+
+            .features {
+                padding: 2rem 1rem;
+            }
+
+            .about {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Welcome to Our Design</h1>
+        <p>Experience advanced CSS styling and responsive design</p>
+        <button class="btn">Get Started</button>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h2 class="section-title">Our Services</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <h3>Design</h3>
+                <p>Beautiful and modern design solutions tailored to your needs with advanced CSS techniques.</p>
+            </div>
+            <div class="service-card">
+                <h3>Responsive</h3>
+                <p>Fully responsive layouts that work perfectly on all devices and screen sizes.</p>
+            </div>
+            <div class="service-card">
+                <h3>Performance</h3>
+                <p>Optimized code and smooth animations for the best user experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="features-text">
+                <h2>Why Choose Us?</h2>
+                <ul class="feature-list">
+                    <li>Advanced CSS styling techniques</li>
+                    <li>Smooth transitions and animations</li>
+                    <li>Mobile-first responsive design</li>
+                    <li>Modern and clean layouts</li>
+                    <li>Easy to customize</li>
+                </ul>
+            </div>
+            <div class="features-image">
+                <h3>Premium Features</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-content">
+            <h2>About Us</h2>
+            <p>We create beautiful, responsive web experiences using advanced CSS styling techniques. Our designs are optimized for all devices and include smooth animations and transitions that enhance user engagement.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <p>&copy; 2026 Advanced CSS Design. All rights reserved.</p>
+    </footer>
+</body>
+</html>
