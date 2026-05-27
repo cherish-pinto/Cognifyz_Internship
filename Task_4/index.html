@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex Form Validation & Dynamic DOM</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">FormFlow</h1>
+                <ul class="nav-links">
+                    <li><a href="#/register" data-route="register">Register</a></li>
+                    <li><a href="#/profile" data-route="profile">Profile</a></li>
+                    <li><a href="#/settings" data-route="settings">Settings</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="container">
+            <div id="register-page" class="page active">
+                <section class="form-section">
+                    <h2>Create Your Account</h2>
+                    <form id="registrationForm" class="form">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" required>
+                            <span class="error-message" id="username-error"></span>
+                            <span class="success-message" id="username-success"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                            <span class="error-message" id="email-error"></span>
+                            <span class="success-message" id="email-success"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" required>
+                            <span class="error-message" id="password-error"></span>
+                            <span class="success-message" id="password-success"></span>
+                            <div class="password-strength">
+                                <div class="strength-bar" id="strengthBar"></div>
+                                <p class="strength-text" id="strengthText">Password strength: None</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                            <span class="error-message" id="confirmPassword-error"></span>
+                            <span class="success-message" id="confirmPassword-success"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                            <span class="error-message" id="phone-error"></span>
+                            <span class="success-message" id="phone-success"></span>
+                        </div>
+
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree to the terms and conditions</label>
+                            <span class="error-message" id="terms-error"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </form>
+                </section>
+            </div>
+
+            <div id="profile-page" class="page">
+                <section class="profile-section">
+                    <h2>User Profile</h2>
+                    <div id="profileContent" class="profile-content">
+                        <p class="placeholder">No profile data. Please register first.</p>
+                    </div>
+                    <button class="btn btn-secondary" id="clearProfile">Clear Profile</button>
+                </section>
+            </div>
+
+            <div id="settings-page" class="page">
+                <section class="settings-section">
+                    <h2>Settings</h2>
+                    <div class="settings-content">
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="notificationToggle">
+                                Enable Notifications
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>
+                                <input type="checkbox" id="darkModeToggle">
+                                Dark Mode
+                            </label>
+                        </div>
+                        <button class="btn btn-danger" id="deleteAccount">Delete Account</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <div id="successModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h3>Success!</h3>
+                <p id="modalMessage">Registration completed successfully.</p>
+                <button class="btn btn-primary" id="modalOkBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
