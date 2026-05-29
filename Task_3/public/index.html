@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 6: Database Integration & Authentication</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">SecureForm</h1>
+            <div class="nav-buttons">
+                <button id="userInfo" class="nav-btn hidden"></button>
+                <button id="logoutBtn" class="nav-btn logout-btn hidden">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="authContainer" class="auth-container">
+        <div class="auth-box">
+            <h2 id="authTitle">Login</h2>
+            <form id="authForm">
+                <div id="usernameField" class="form-group hidden">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+                <p class="toggle-auth">Don't have an account? <a href="#" class="toggle-link">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="mainContainer" class="main-container hidden">
+        <div class="container">
+            <section class="form-section">
+                <h2>Submit Form</h2>
+                <form id="dataForm">
+                    <div class="form-group">
+                        <label for="formName">Name</label>
+                        <input type="text" id="formName" name="name" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formEmail">Email</label>
+                        <input type="email" id="formEmail" name="email" placeholder="Your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formMessage">Message</label>
+                        <textarea id="formMessage" name="message" placeholder="Your message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit</button>
+                </form>
+            </section>
+
+            <section class="submissions-section">
+                <h2>Your Submissions</h2>
+                <div id="submissionsList" class="submissions-list">
+                    <p class="empty-message">No submissions yet</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
