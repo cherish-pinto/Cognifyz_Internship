@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Server Functionality</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: #0a2463;
+      color: white;
+      padding: 30px;
+      border-radius: 4px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 2em;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1em;
+      color: #e0c700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 4px;
+      padding: 25px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      border-left: 4px solid #ffd700;
+    }
+
+    .card h2 {
+      color: #0a2463;
+      margin-bottom: 15px;
+      font-size: 1.3em;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      color: #0a2463;
+      margin-bottom: 5px;
+      font-weight: 500;
+      font-size: 0.95em;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 0.95em;
+      transition: border-color 0.3s;
+      font-family: inherit;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #0a2463;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button {
+      background: #0a2463;
+      color: #ffd700;
+      border: 1px solid #0a2463;
+      padding: 11px 22px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.95em;
+      font-weight: 600;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    button:hover {
+      background: #1a3a70;
+      border-color: #1a3a70;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .result {
+      background: #f9f9f9;
+      border-left: 4px solid #0a2463;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 15px;
+      font-size: 0.9em;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .result.success {
+      background: #f0fff4;
+      border-left-color: #22c55e;
+    }
+
+    .result.error {
+      background: #fef2f2;
+      border-left-color: #ef4444;
+      color: #991b1b;
+    }
+
+    .result pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85em;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .stat-item {
+      background: #0a2463;
+      color: #ffd700;
+      padding: 15px;
+      border-radius: 4px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+
+    .stat-value {
+      font-size: 1.4em;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .loading {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #ffd700;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    p {
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Advanced Server Functionality</h1>
+      <p>Middleware • Caching • Job Processing</p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Fetch Cached Data</h2>
+        <p style="color: #666; margin-bottom: 15px; font-size: 0.95em;">Get cached user data with automatic 1-hour expiration</p>
+        <button onclick="fetchData()">Fetch Users</button>
+        <div id="dataResult" class="result" style="display: none;"></div>
+      </div>
+
+      <div class="card">
+        <h2>Send Email Job</h2>
+        <form onsubmit="sendEmail(event)">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" required placeholder="user@example.com">
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" required placeholder="Email subject">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" required placeholder="Email message"></textarea>
+          </div>
+          <button type="submit">Queue Email</button>
+        </form>
+        <div id="emailResult" class="result" style="display: none;"></div>
+      </div>
+
+      <div class="card">
+        <h2>Process Data Job</h2>
+        <form onsubmit="processData(event)">
+          <div class="form-group">
+            <label for="dataset">Dataset Size</label>
+            <select id="dataset" required>
+              <option value="">Select dataset size</option>
+              <option value="small">Small (10 items)</option>
+              <option value="medium">Medium (50 items)</option>
+              <option value="large">Large (100 items)</option>
+            </select>
+          </div>
+          <button type="submit">Start Processing</button>
+        </form>
+        <div id="processingResult" class="result" style="display: none;"></div>
+      </div>
+
+      <div class="card">
+        <h2>Check Job Status</h2>
+        <div class="form-group">
+          <label for="jobId">Job ID</label>
+          <input type="text" id="jobId" placeholder="Enter job ID">
+        </div>
+        <button onclick="checkJobStatus()">Check Status</button>
+        <div id="jobStatusResult" class="result" style="display: none;"></div>
+      </div>
+
+      <div class="card full-width">
+        <h2>Server Statistics</h2>
+        <button onclick="loadStats()">Refresh Stats</button>
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-item">
+            <div class="stat-label">Loading...</div>
+            <div class="stat-value"><div class="loading"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showResult(elementId, data, isError = false) {
+      const element = document.getElementById(elementId);
+      element.className = `result ${isError ? 'error' : 'success'}`;
+      element.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+      element.style.display = 'block';
+    }
+
+    function fetchData() {
+      fetch('/api/data')
+        .then(res => res.json())
+        .then(data => {
+          showResult('dataResult', data);
+        })
+        .catch(error => showResult('dataResult', { error: error.message }, true));
+    }
+
+    function sendEmail(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+
+      fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, subject, message })
+      })
+      .then(res => res.json())
+      .then(data => {
+        showResult('emailResult', data, !data.success);
+        if (data.success) {
+          document.getElementById('jobId').value = data.jobId;
+          document.getElementById('email').value = '';
+          document.getElementById('subject').value = '';
+          document.getElementById('message').value = '';
+        }
+      })
+      .catch(error => showResult('emailResult', { error: error.message }, true));
+    }
+
+    function processData(event) {
+      event.preventDefault();
+      const datasetValue = document.getElementById('dataset').value;
+      const sizes = { small: 10, medium: 50, large: 100 };
+      const dataset = Array.from({ length: sizes[datasetValue] }, (_, i) => `item-${i + 1}`);
+
+      fetch('/api/process-data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ dataset })
+      })
+      .then(res => res.json())
+      .then(data => {
+        showResult('processingResult', data, !data.success);
+        if (data.success) {
+          document.getElementById('jobId').value = data.jobId;
+          document.getElementById('dataset').value = '';
+        }
+      })
+      .catch(error => showResult('processingResult', { error: error.message }, true));
+    }
+
+    function checkJobStatus() {
+      const jobId = document.getElementById('jobId').value;
+      if (!jobId) {
+        showResult('jobStatusResult', { error: 'Please enter a Job ID' }, true);
+        return;
+      }
+
+      fetch(`/api/job/${jobId}`)
+        .then(res => res.json())
+        .then(data => {
+          showResult('jobStatusResult', data, !data.jobId);
+        })
+        .catch(error => showResult('jobStatusResult', { error: error.message }, true));
+    }
+
+    function loadStats() {
+      fetch('/api/stats')
+        .then(res => res.json())
+        .then(data => {
+          const uptime = Math.floor(data.uptime);
+          const memory = data.memory;
+          
+          const statsGrid = document.getElementById('statsGrid');
+          statsGrid.innerHTML = `
+            <div class="stat-item">
+              <div class="stat-label">Uptime</div>
+              <div class="stat-value">${uptime}s</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Heap Used</div>
+              <div class="stat-value">${(memory.heapUsed / 1024 / 1024).toFixed(2)}MB</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Heap Total</div>
+              <div class="stat-value">${(memory.heapTotal / 1024 / 1024).toFixed(2)}MB</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">External</div>
+              <div class="stat-value">${(memory.external / 1024 / 1024).toFixed(2)}MB</div>
+            </div>
+          `;
+        })
+        .catch(error => {
+          const statsGrid = document.getElementById('statsGrid');
+          statsGrid.innerHTML = `<div class="stat-item" style="grid-column: 1/-1;"><div class="stat-label">Error loading stats</div></div>`;
+        });
+    }
+
+    window.addEventListener('load', loadStats);
+  </script>
+</body>
+</html>
